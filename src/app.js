@@ -1,12 +1,12 @@
 const path = require("path");
 const express = require("express");
 const hbs = require("hbs");
-// const { request } = require("http");
 const geocode = require("./utils/geocode");
-const forecase = require("./utils/forecast");
+const forecast = require("./utils/forecast");
 const forecast = require("./utils/forecast");
 
 const app = express();
+const port = process.env.PORT || 3000;
 
 // Define paths for Express config
 const publicDirectoryPath = path.join(__dirname, "../public");
@@ -76,19 +76,6 @@ app.get("/weather", (req, res) => {
   );
 });
 
-app.get("/products", (req, res) => {
-  if (!req.query.search) {
-    return res.send({
-      error: "You must provide a search term",
-    });
-  }
-
-  console.log(req.query.search);
-  res.send({
-    products: [],
-  });
-});
-
 app.get("/help/*", (req, res) => {
   res.render("404", {
     title: "404",
@@ -105,38 +92,7 @@ app.get("*", (req, res) => {
   });
 });
 
-// starts up server and has it listen on a port, takes an optional callback function
-app.listen(3000, () => {
-  console.log("Server is up on port 3000");
+// starts up server and have it listen on a port, takes an optional callback function
+app.listen(port, () => {
+  console.log(`Server is up on port ${port}`);
 });
-
-// get takes in 2 arguments, 1st is the route (partial url) and 2nd is function (what we want to do when someone visits the route, what to send back to them)
-// get lets us configure what the server should do when someone tries to get the resource at a specific URL (maybe we should be sending back HTML or JSON)
-
-// DON'T NEED THIS ANYMORE BECAUSE IT COMES FROM STATIC DIRECTORY
-// app.get("", (req, res) => {
-//   // send something back to the requester
-//   res.send("<h1>Weather</h1>");
-// });
-
-// app.get("/help", (req, res) => {
-//   // can provide send an object or array and will automatically stringify JSON for you
-
-//   //   res.send({
-//   //     name: "Michelle",
-//   //     age: 25,
-//   //   });
-
-//   res.send([
-//     {
-//       name: "Andrew",
-//     },
-//     {
-//       name: "Michelle",
-//     },
-//   ]);
-// });
-
-// app.get("/about", (req, res) => {
-//   res.send("<h1>About</h1>");
-// });
